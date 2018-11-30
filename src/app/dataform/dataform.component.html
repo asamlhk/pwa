@@ -14,13 +14,13 @@
                         {{isNew()?'Add':'Update'}}
                 </button>
                 <button mat-raised-button (click)="delete()">Delete</button>
-<button mat-raised-button (click)="encryptJSON(results)">Encrypt</button>
-<button mat-raised-button (click)="decryptJSON(results)">Decrypt</button>
+                <button mat-raised-button (click)="encryptJSON(results)">Encrypt</button>
+                <button mat-raised-button (click)="decryptJSON(results)">Decrypt</button>
         </mat-card-actions>
 </mat-card>
 
- 
- 
+
+
 <pre>{{results|json}} </pre>
 
 <mat-card>
@@ -33,10 +33,13 @@
                 </mat-form-field>
                 <div class="container">
                         <table mat-table [dataSource]="dataSource">
+ 
                                 <ng-container matColumnDef="name" sticky>
                                         <th mat-header-cell *matHeaderCellDef> Name </th>
                                         <td mat-cell *matCellDef="let element">
+
                                                 {{element['name']}}
+                                                <button (click)="del(element['id'])">X</button>
 
                                         </td>
 

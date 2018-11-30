@@ -7,10 +7,9 @@ import { DataEncryptionService } from '../data-encryption.service';
 export class user {
   name: string = "name";
   age: number = 10;
-  class: string = "gold";
+ 
   gender: string = 'M';
-  occupation: string = '';
-  educationlevel: string = 'degree';
+ 
 
 }
  
@@ -25,8 +24,14 @@ export class DataformComponent implements OnInit {
   version = 1;
  
 
-  delete() {
-    this.opendb(this.version++)
+  del(id) {
+    var request = this.db.transaction(['posdb'], 'readwrite')
+      .objectStore('posdb')
+      .delete(id);
+    this.readAll();
+    request.onsuccess = function (event) {
+      
+    }
   }
 
   dataCols = (cols) => cols.filter(x => x != 'name')
@@ -64,7 +69,8 @@ export class DataformComponent implements OnInit {
 
   }
 
-  constructor(public snackBar: MatSnackBar,
+  constructor(
+    public snackBar: MatSnackBar,
 
     public des: DataEncryptionService,
   ) {
@@ -148,6 +154,7 @@ export class DataformComponent implements OnInit {
     console.log(item)
     this.data = item;
   }
+
   updatedb(obj) {
     var request = this.db.transaction(['posdb'], 'readwrite')
       .objectStore('posdb')
