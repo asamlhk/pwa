@@ -11,6 +11,16 @@ export class DataEncryptionService {
     this.encryptionService.generateKey('helloworld').then(k => this.key2 = k);
   }
 
+ 
+  
+  encryptJSON(obj) {
+    this.scan(obj, this.encrypt.bind(this));
+  }
+
+  decryptJSON(obj) {
+    this.scan(obj, this.decrypt.bind(this));
+  }
+
   encrypt(data) {
     return this.encryptionService.encrypt(data, this.key2);
   }

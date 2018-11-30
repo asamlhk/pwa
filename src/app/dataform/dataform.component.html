@@ -14,17 +14,14 @@
                         {{isNew()?'Add':'Update'}}
                 </button>
                 <button mat-raised-button (click)="delete()">Delete</button>
-
+<button mat-raised-button (click)="encryptJSON(results)">Encrypt</button>
+<button mat-raised-button (click)="decryptJSON(results)">Decrypt</button>
         </mat-card-actions>
 </mat-card>
 
-<br>
-<button mat-raised-button (click)="encryptJSON(results)">Encrypt</button>
-<button mat-raised-button (click)="decryptJSON(results)">Decrypt</button>
-Key: {{key2}}
-<pre>
-        {{results|json}}
-</pre>
+ 
+ 
+<pre>{{results|json}} </pre>
 
 <mat-card>
         <mat-card-title>

@@ -13,9 +13,7 @@ export class user {
   educationlevel: string = 'degree';
 
 }
-
-
-
+ 
 @Component({
   selector: 'app-dataform',
   templateUrl: './dataform.component.html',
@@ -25,39 +23,17 @@ export class DataformComponent implements OnInit {
   db;
   results: user[];
   version = 1;
-  keyStore;
-
  
-
-  getType = (name) => {
-    return typeof (new user())[name]
-  }
 
   delete() {
     this.opendb(this.version++)
   }
 
   dataCols = (cols) => cols.filter(x => x != 'name')
-
  
- 
-
-
-
-  encryptJSON(obj) {
-    this.des.scan(obj, this.des.encrypt.bind(this));
-  }
-
-  decryptJSON(obj) {
-    this.des.scan(obj, this.des.encrypt.bind(this));
-  }
-
-
-
-
-
+  encryptJSON = (o) => this.des.encryptJSON(o);
+  decryptJSON = (o) => this.des.decryptJSON(o);
   displayedColumns: string[] = Object.keys(new user())
-
   data = {
   }
 
@@ -66,27 +42,10 @@ export class DataformComponent implements OnInit {
   dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  key2;
 
-  ab2str(buf) {
-    return String.fromCharCode.apply(null, new Uint16Array(buf));
-  }
-  str2ab(str) {
-    var buf = new ArrayBuffer(str.length * 2); // 2 bytes for each char
-    var bufView = new Uint16Array(buf);
-    for (var i = 0, strLen = str.length; i < strLen; i++) {
-      bufView[i] = str.charCodeAt(i);
-    }
-    return buf;
-  }
 
- 
   ngOnInit() {
 
-    
-
-    
- 
     this.opendb();
     window.ononline = (e) => {
       this.snackBar.open('online', 'OK', {
@@ -102,11 +61,11 @@ export class DataformComponent implements OnInit {
       console.log(e, 'offline')
     }
 
- 
+
   }
 
   constructor(public snackBar: MatSnackBar,
-  
+
     public des: DataEncryptionService,
   ) {
 
