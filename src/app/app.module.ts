@@ -7,14 +7,27 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
 
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatPaginatorModule } from '@angular/material';
+import { MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { DataformComponent } from './dataform/dataform.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { CRYPT_CONFIG_PROVIDER, CryptConfigProvider, EncryptionServiceModule } from 'angular-encryption-service';
 
-import {MatButtonModule, MatCheckboxModule} from '@angular/material';
-
+const AppCryptConfigProvider: CryptConfigProvider = {
+  getSalt(): Promise<string> {
+    return Promise.resolve('saltsalt');
+  }
+};
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DataformComponent
   ],
   imports: [
     BrowserModule,
@@ -23,8 +36,15 @@ import {MatButtonModule, MatCheckboxModule} from '@angular/material';
     FormsModule,
     BrowserAnimationsModule,
     MatButtonModule, MatCheckboxModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatTableModule,
+    MatCardModule,
+    MatPaginatorModule,
+    MatSnackBarModule,
+    EncryptionServiceModule.forRoot(),
   ],
-  providers: [],
+  providers: [{ provide: CRYPT_CONFIG_PROVIDER, useValue: AppCryptConfigProvider }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
