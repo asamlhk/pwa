@@ -2,56 +2,46 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { MatSnackBar } from '@angular/material';
 
-import { DataEncryptionService } from '../data-encryption.service';
+
+import { LocaldbService } from '../localdb.service';
 
 export class user {
   name: string = "name";
   age: number = 10;
- 
   gender: string = 'M';
- 
-
 }
- 
+
 @Component({
   selector: 'app-dataform',
   templateUrl: './dataform.component.html',
   styleUrls: ['./dataform.component.css']
 })
 export class DataformComponent implements OnInit {
-  db;
-  results: user[];
-  version = 1;
- 
 
-  del(id) {
-    var request = this.db.transaction(['posdb'], 'readwrite')
-      .objectStore('posdb')
-      .delete(id);
-    this.readAll();
-    request.onsuccess = function (event) {
-      
-    }
-  }
-
+  data = {};
+  results = [];
   dataCols = (cols) => cols.filter(x => x != 'name')
- 
-  encryptJSON = (o) => this.des.encryptJSON(o);
-  decryptJSON = (o) => this.des.decryptJSON(o);
+
+
   displayedColumns: string[] = Object.keys(new user())
-  data = {
-  }
-
-
-
   dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+  loadDB() {
 
+    this.localDB.opendb().then(
+      r => {
 
+        this.localDB.readAll().then(
+          p => {
+            this.results = p;
+            this.bindTable(this.results);
+          }
+        )
+      }
+    )
+  }
   ngOnInit() {
-
-    this.opendb();
     window.ononline = (e) => {
       this.snackBar.open('online', 'OK', {
         duration: 2000,
@@ -66,116 +56,73 @@ export class DataformComponent implements OnInit {
       console.log(e, 'offline')
     }
 
+    this.loadDB();
+ 
 
+  }
+
+  bindTable(data) {
+    this.dataSource = new MatTableDataSource<any>(data);
+    this.dataSource.paginator = this.paginator;
   }
 
   constructor(
     public snackBar: MatSnackBar,
-
-    public des: DataEncryptionService,
+    public localDB: LocaldbService,
   ) {
-
-
   }
+
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue
-      .trim()
-      .toLowerCase();
+    this
+      .dataSource
+      .filter = filterValue
+        .trim()
+        .toLowerCase();
   }
-  readAll() {
-    let req = this.db.transaction(['posdb'])
-      .objectStore('posdb')
-      .getAll();
-
-    req.onsuccess =
-      (event) => {
-        this.results = (req.result)
-
-        this.dataSource = new MatTableDataSource<any>(this.results);
-        this.dataSource.paginator = this.paginator;
-      }
-
+  newitem() {
+    this.data = {};
   }
-
-  read(index) {
-
-    var request = this.db
-      .transaction(['posdb'])
-      .objectStore('posdb')
-      .get(index);
-
-    request.onsuccess =
-      (event) => {
-        if (request.result) {
-          console.log(request.result)
-        }
-      }
-
-
-  }
-
-  opendb(version?) {
-    let request = window.indexedDB.open('posdb', version);
-
-    request.onsuccess = (event) => {
-      this.db = request.result;
-      console.log('db opened', this.db);
-      this.readAll();
-    }
-
-    request.onupgradeneeded = (event) => {
-      //initialize
-      this.db = event.target;
-      this.db = this.db.result;
-      var objectStore = this.db.createObjectStore('posdb', { keyPath: 'id' });
-    }
-  }
-
-  loaddb() {
-
-  }
-
   save() {
-    if (!this.isNew()) {
+    if (this.isNew()) {
+      if (this.results) {
+        this.data['id'] = this.results.map(
+          x => x.id
+        ).reduce(
+          (num, max) => max > num ? max : num, 0
+        ) + 1;
+        console.log(this.data['id'])
 
-      this.updatedb(this.data);
-    }
-    else {
-      this.add2db(this.results.length + 20, this.data);
-    }
+        this.results.push(
+          this.data
+        )
+      }
 
-    this.readAll();
+    }
+    this.bindTable(this.results);
   }
-
   isNew() {
     return !this.data['id']
   }
   edit(item) {
-    console.log(item)
+
     this.data = item;
   }
+  delete(id) {
+    this.results = this.results.filter(
+      x => x.id != id
+    )
+    this.bindTable(this.results);
 
-  updatedb(obj) {
-    var request = this.db.transaction(['posdb'], 'readwrite')
-      .objectStore('posdb')
-      .put(obj);
-
-    request.onsuccess = function (event) {
-
-    }
   }
 
-  add2db(id, obj) {
-    var request = this.db.transaction(['posdb'], 'readwrite')
-      .objectStore('posdb')
-      .add({
-        id: id,
-        ...obj
-      });
+  loadfromDB() {
 
-    request.onsuccess = function (event) {
-
-    };
   }
+
+  savetoDB() {
+    this.localDB.save2db(this.results);
+  }
+
+
 
 }
