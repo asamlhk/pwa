@@ -3,23 +3,69 @@
                 Input
         </mat-card-title>
         <mat-card-content>
-                <mat-form-field *ngFor="let c of displayedColumns">
-                        <input matInput [(ngModel)]="data[c]" [placeholder]="c">
+
+
+                <mat-form-field>
+                        <input matInput placeholder="Company" [(ngModel)]="data.company"   >
                 </mat-form-field>
+
+                <table cellspacing="0">
+                        <tr>
+                                <td>
+                                        <mat-form-field>
+                                                <input matInput placeholder="First name" [(ngModel)]="data.firstname">
+                                        </mat-form-field>
+                                </td>
+                                <td>
+                                        <mat-form-field>
+                                                <input matInput placeholder="Long Last Name That Will Be Truncated" [(ngModel)]="data.lastname">
+                                        </mat-form-field>
+                                </td>
+                        </tr>
+                </table>
+
+                <p>
+                        <mat-form-field>
+                                <textarea matInput placeholder="Address" [(ngModel)]="data.address">1600 Amphitheatre Pkwy</textarea>
+                        </mat-form-field>
+                        <mat-form-field>
+                                <textarea matInput placeholder="Address 2" [(ngModel)]="data.address2"></textarea>
+                        </mat-form-field>
+                </p>
+
+                <table cellspacing="0">
+                        <tr>
+                                <td>
+                                        <mat-form-field>
+                                                <input matInput placeholder="City" [(ngModel)]="data.city">
+                                        </mat-form-field>
+                                </td>
+                                <td>
+                                        <mat-form-field>
+                                                <input matInput placeholder="State" [(ngModel)]="data.state">
+                                        </mat-form-field>
+                                </td>
+                                <td>
+                                        <mat-form-field>
+                                                <input matInput #postalCode maxlength="5" placeholder="Postal Code" value="94043" [(ngModel)]="data.postal">
+                                                <mat-hint align="end">{{postalCode.value.length}} / 5</mat-hint>
+                                        </mat-form-field>
+                                </td>
+                        </tr>
+                </table>
+
         </mat-card-content>
         <mat-card-actions>
                 <button mat-raised-button (click)="save()">
                         {{isNew()?'Add':'Update'}}
                 </button>
-        <button mat-raised-button (click)="newitem()">New Item</button>
+                <button mat-raised-button (click)="newitem()">New Item</button>
                 <button mat-raised-button (click)="savetoDB()">Save</button>
                 <button mat-raised-button (click)="loadDB()">Decrypt</button>
         </mat-card-actions>
 </mat-card>
 
 
-
-<pre>{{results|json}} </pre>
 
 <mat-card>
         <mat-card-title>
@@ -31,13 +77,15 @@
                 </mat-form-field>
                 <div class="container">
                         <table mat-table [dataSource]="dataSource">
- 
+
                                 <ng-container matColumnDef="name" sticky>
                                         <th mat-header-cell *matHeaderCellDef> Name </th>
                                         <td mat-cell *matCellDef="let element">
-
+                                                <button (click)="delete(element['id'])">
+                                                        <i class="material-icons">face</i>
+                                                </button>
                                                 {{element['name']}}
-                                                <button (click)="delete(element['id'])">X</button>
+
 
                                         </td>
 

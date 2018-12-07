@@ -11,7 +11,8 @@ mat-card-actions{
     text-align: end;
 }
 mat-card {
-    width: 80vw;
+    width: 90vw;
+    margin: 5px;
 }
  
 table {

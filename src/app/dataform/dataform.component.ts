@@ -6,9 +6,14 @@ import { MatSnackBar } from '@angular/material';
 import { LocaldbService } from '../localdb.service';
 
 export class user {
-  name: string = "name";
-  age: number = 10;
-  gender: string = 'M';
+  company: string = "name";
+  firstname: string = "firstname";
+  lastname: string = 'lastname';
+  address: string = '';
+  address2: string = '';
+  city: string = '';
+  state: string = '';
+  postal: string = '';
 }
 
 @Component({
@@ -21,14 +26,11 @@ export class DataformComponent implements OnInit {
   data = {};
   results = [];
   dataCols = (cols) => cols.filter(x => x != 'name')
-
-
   displayedColumns: string[] = Object.keys(new user())
   dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   loadDB() {
-
     this.localDB.opendb().then(
       r => {
 
@@ -55,11 +57,8 @@ export class DataformComponent implements OnInit {
       })
       console.log(e, 'offline')
     }
-
     this.loadDB();
- 
-
-  }
+ }
 
   bindTable(data) {
     this.dataSource = new MatTableDataSource<any>(data);

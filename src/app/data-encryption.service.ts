@@ -20,7 +20,6 @@ export class DataEncryptionService {
           resolve(k);
         }
       );
-      
     })
 
   }
@@ -60,13 +59,10 @@ export class DataEncryptionService {
      
             p.then(
               d => {
-                let result = [];
-
-                obj[k] = d;
-                
+                let result = []; 
+                obj[k] = d; 
               }
-            )
-
+            ) 
           }
         }
       }
