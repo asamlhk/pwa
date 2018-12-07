@@ -23,7 +23,7 @@ export class user {
 })
 export class DataformComponent implements OnInit {
 
-  data = {};
+  data: user = new user();
   results = [];
   dataCols = (cols) => cols.filter(x => x != 'name')
   displayedColumns: string[] = Object.keys(new user())
@@ -79,7 +79,7 @@ export class DataformComponent implements OnInit {
         .toLowerCase();
   }
   newitem() {
-    this.data = {};
+    this.data = new user();
   }
   save() {
     if (this.isNew()) {
