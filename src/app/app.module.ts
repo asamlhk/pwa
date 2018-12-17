@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { FormsModule } from '@angular/forms';
-
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatPaginatorModule } from '@angular/material';
 import { MatButtonModule, MatCheckboxModule } from '@angular/material';
@@ -17,7 +17,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { CRYPT_CONFIG_PROVIDER, CryptConfigProvider, EncryptionServiceModule } from 'angular-encryption-service';
-
+import {MatGridListModule} from '@angular/material/grid-list';
 const AppCryptConfigProvider: CryptConfigProvider = {
   getSalt(): Promise<string> {
     return Promise.resolve('saltsalt');
@@ -42,9 +42,11 @@ const AppCryptConfigProvider: CryptConfigProvider = {
     MatCardModule,
     MatPaginatorModule,
     MatSnackBarModule,
+    MatGridListModule,
+    FlexLayoutModule,
     EncryptionServiceModule.forRoot(),
   ],
-  providers: [{ provide: CRYPT_CONFIG_PROVIDER, useValue: AppCryptConfigProvider }],
+  providers: [{ provide: CRYPT_CONFIG_PROVIDER, useValue: AppCryptConfigProvider}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -26,7 +26,7 @@ td {
 
 .container {
     width: 80vw;
-    background-color: beige;
+    background-color: gray;
     overflow-x: scroll;
 }
 

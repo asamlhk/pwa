@@ -4,16 +4,18 @@ import { MatSnackBar } from '@angular/material';
 
 
 import { LocaldbService } from '../localdb.service';
+import { ObservableMedia, MediaChange } from '@angular/flex-layout';
+//import '../../assets/bigScript';
+
 
 export class user {
-  company: string = "name";
-  firstname: string = "firstname";
-  lastname: string = 'lastname';
-  address: string = '';
-  address2: string = '';
+  company: string = '';
+  firstname: string = '';
+  lastname: string = '';
+
   city: string = '';
   state: string = '';
-  postal: string = '';
+
 }
 
 @Component({
@@ -23,14 +25,21 @@ export class user {
 })
 export class DataformComponent implements OnInit {
 
+  mode;
+  private countBySize = { xs: 1, sm: 2, md: 2, lg: 3, xl: 3 };
   data: user = new user();
   results = [];
+  cols = 2;
   dataCols = (cols) => cols.filter(x => x != 'name')
   displayedColumns: string[] = Object.keys(new user())
   dataSource;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
+
   loadDB() {
+    //let a = "X";
+
+
     this.localDB.opendb().then(
       r => {
 
@@ -44,6 +53,12 @@ export class DataformComponent implements OnInit {
     )
   }
   ngOnInit() {
+
+    this.media.asObservable()
+      .subscribe((changes: MediaChange) =>
+        this.cols = this.countBySize[changes.mqAlias]
+      );
+
     window.ononline = (e) => {
       this.snackBar.open('online', 'OK', {
         duration: 2000,
@@ -58,7 +73,7 @@ export class DataformComponent implements OnInit {
       console.log(e, 'offline')
     }
     this.loadDB();
- }
+  }
 
   bindTable(data) {
     this.dataSource = new MatTableDataSource<any>(data);
@@ -68,7 +83,9 @@ export class DataformComponent implements OnInit {
   constructor(
     public snackBar: MatSnackBar,
     public localDB: LocaldbService,
+    private media: ObservableMedia,
   ) {
+
   }
 
   applyFilter(filterValue: string) {
@@ -80,6 +97,7 @@ export class DataformComponent implements OnInit {
   }
   newitem() {
     this.data = new user();
+    this.mode='E';
   }
   save() {
     if (this.isNew()) {
@@ -98,6 +116,7 @@ export class DataformComponent implements OnInit {
 
     }
     this.bindTable(this.results);
+    this.mode=null;
   }
   isNew() {
     return !this.data['id']
@@ -105,6 +124,7 @@ export class DataformComponent implements OnInit {
   edit(item) {
 
     this.data = item;
+    this.mode='E'
   }
   delete(id) {
     this.results = this.results.filter(
