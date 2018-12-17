@@ -34,3 +34,7 @@ pre {
     height: 40vh;
     overflow-y: scroll;
 }
+
+mat-card {
+    opacity: 0.9;
+}

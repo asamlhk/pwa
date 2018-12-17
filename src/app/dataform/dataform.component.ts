@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material';
 
 import { LocaldbService } from '../localdb.service';
 import { ObservableMedia, MediaChange } from '@angular/flex-layout';
-//import '../../assets/bigScript';
+ 
 
 
 export class user {
@@ -73,6 +73,7 @@ export class DataformComponent implements OnInit {
       console.log(e, 'offline')
     }
     this.loadDB();
+ 
   }
 
   bindTable(data) {

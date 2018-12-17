@@ -16,6 +16,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatToolbarModule} from '@angular/material/toolbar';
 import { CRYPT_CONFIG_PROVIDER, CryptConfigProvider, EncryptionServiceModule } from 'angular-encryption-service';
 import {MatGridListModule} from '@angular/material/grid-list';
 const AppCryptConfigProvider: CryptConfigProvider = {
@@ -32,6 +33,7 @@ const AppCryptConfigProvider: CryptConfigProvider = {
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatToolbarModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     FormsModule,
     BrowserAnimationsModule,
