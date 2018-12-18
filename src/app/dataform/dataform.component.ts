@@ -5,7 +5,8 @@ import { MatSnackBar } from '@angular/material';
 
 import { LocaldbService } from '../localdb.service';
 import { ObservableMedia, MediaChange } from '@angular/flex-layout';
- 
+//import { AngularFirestore } from '@angular/fire/firestore';
+
 
 
 export class user {
@@ -85,7 +86,20 @@ export class DataformComponent implements OnInit {
     public snackBar: MatSnackBar,
     public localDB: LocaldbService,
     private media: ObservableMedia,
+    //db: AngularFirestore,
   ) {
+
+  }
+
+  toFB() {
+    this.localDB.readAll().then(
+      x => 
+      console.log(x)
+    )
+   
+  }
+
+  fromFB() {
 
   }
 

@@ -16,9 +16,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableModule } from '@angular/material/table';
 import { MatCardModule } from '@angular/material/card';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { CRYPT_CONFIG_PROVIDER, CryptConfigProvider, EncryptionServiceModule } from 'angular-encryption-service';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
+import { AngularFirestore } from 'angularfire2/firestore'
+
+ 
+
 const AppCryptConfigProvider: CryptConfigProvider = {
   getSalt(): Promise<string> {
     return Promise.resolve('saltsalt');
@@ -47,8 +53,10 @@ const AppCryptConfigProvider: CryptConfigProvider = {
     MatGridListModule,
     FlexLayoutModule,
     EncryptionServiceModule.forRoot(),
+  //  AngularFireModule.initializeApp(environment.firebase)
+ 
   ],
-  providers: [{ provide: CRYPT_CONFIG_PROVIDER, useValue: AppCryptConfigProvider}],
+  providers: [AngularFirestore, { provide: CRYPT_CONFIG_PROVIDER, useValue: AppCryptConfigProvider, }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
