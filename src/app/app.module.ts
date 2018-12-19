@@ -53,6 +53,16 @@ const AppCryptConfigProvider: CryptConfigProvider = {
     MatGridListModule,
     FlexLayoutModule,
     EncryptionServiceModule.forRoot(),
+    AngularFireModule.initializeApp(
+       {
+        apiKey: "AIzaSyBv3iWi5wB48xAuyjVATWK3fL02DyuTC4M",
+        authDomain: "pwademo-f2b31.firebaseapp.com",
+        databaseURL: "https://pwademo-f2b31.firebaseio.com",
+        projectId: "pwademo-f2b31",
+        storageBucket: "pwademo-f2b31.appspot.com",
+        messagingSenderId: "729507054695"
+      } 
+    ),
   //  AngularFireModule.initializeApp(environment.firebase)
  
   ],

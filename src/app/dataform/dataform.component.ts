@@ -5,7 +5,7 @@ import { MatSnackBar } from '@angular/material';
 
 import { LocaldbService } from '../localdb.service';
 import { ObservableMedia, MediaChange } from '@angular/flex-layout';
-//import { AngularFirestore } from '@angular/fire/firestore';
+
 
 
 
@@ -43,13 +43,15 @@ export class DataformComponent implements OnInit {
 
     this.localDB.opendb().then(
       r => {
+        if (r) {
 
-        this.localDB.readAll().then(
-          p => {
-            this.results = p;
-            this.bindTable(this.results);
-          }
-        )
+          this.localDB.readAll().then(
+            p => {
+              this.results = p;
+              this.bindTable(this.results);
+            }
+          )
+        }
       }
     )
   }
@@ -74,7 +76,7 @@ export class DataformComponent implements OnInit {
       console.log(e, 'offline')
     }
     this.loadDB();
- 
+
   }
 
   bindTable(data) {
@@ -86,22 +88,24 @@ export class DataformComponent implements OnInit {
     public snackBar: MatSnackBar,
     public localDB: LocaldbService,
     private media: ObservableMedia,
-    //db: AngularFirestore,
+ 
   ) {
 
   }
 
-  toFB() {
-    this.localDB.readAll().then(
-      x => 
-      console.log(x)
+
+  syncup() {
+    this.localDB.syncToFB();
+
+  }
+
+  syncdown() {
+    this.localDB.syncFromFB().then(
+      r => this.loadDB()
     )
-   
+    
   }
-
-  fromFB() {
-
-  }
+ 
 
   applyFilter(filterValue: string) {
     this
@@ -112,7 +116,7 @@ export class DataformComponent implements OnInit {
   }
   newitem() {
     this.data = new user();
-    this.mode='E';
+    this.mode = 'E';
   }
   save() {
     if (this.isNew()) {
@@ -131,7 +135,7 @@ export class DataformComponent implements OnInit {
 
     }
     this.bindTable(this.results);
-    this.mode=null;
+    this.mode = null;
   }
   isNew() {
     return !this.data['id']
@@ -139,7 +143,7 @@ export class DataformComponent implements OnInit {
   edit(item) {
 
     this.data = item;
-    this.mode='E'
+    this.mode = 'E'
   }
   delete(id) {
     this.results = this.results.filter(
@@ -149,9 +153,7 @@ export class DataformComponent implements OnInit {
 
   }
 
-  loadfromDB() {
-
-  }
+ 
 
   savetoDB() {
     this.localDB.save2db(this.results);

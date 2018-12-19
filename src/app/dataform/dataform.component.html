@@ -1,5 +1,5 @@
 <mat-toolbar>PWA PoC</mat-toolbar>
- 
+
 <mat-card *ngIf="mode">
         <mat-card-title>
                 Input
@@ -48,16 +48,20 @@
 <mat-card *ngIf="!mode">
         <mat-card-title>
                 Data
-                <button mat-button (click)="savetoDB()">
-                        <i class="material-icons">
-                                save_alt
-                        </i>
+                <button mat-stroked-button (click)="newitem()" *ngIf="!mode">
+                        Add New
+
                 </button>
-                <button mat-mini-fab (click)="newitem()" *ngIf="!mode">
-                        <i class="material-icons">
-                                fiber_new
-                        </i>
+                <button mat-stroked-button (click)="savetoDB()">
+
+                        Save to indexedDB
+
                 </button>
+
+                <button mat-stroked-button (click)="syncup()">Sync Up to Cloud</button>
+
+
+                <button mat-stroked-button (click)="syncdown()">Sync Down from Cloud</button>
         </mat-card-title>
         <mat-card-content>
                 <mat-form-field>
