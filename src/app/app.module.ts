@@ -21,8 +21,9 @@ import { CRYPT_CONFIG_PROVIDER, CryptConfigProvider, EncryptionServiceModule } f
 import { MatGridListModule } from '@angular/material/grid-list';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
-import { AngularFirestore } from 'angularfire2/firestore'
-
+import { AngularFirestore } from 'angularfire2/firestore';
+import { Page2Component } from './page2/page2.component'
+import { RouterModule, Routes } from '@angular/router';
  
 
 const AppCryptConfigProvider: CryptConfigProvider = {
@@ -31,10 +32,18 @@ const AppCryptConfigProvider: CryptConfigProvider = {
   }
 };
 
+const appRoutes: Routes = [
+  { path: 'dataform', component: DataformComponent },
+  { path: 'page2',      component: Page2Component },
+  { path: '',      component: DataformComponent },
+];
+
+
 @NgModule({
   declarations: [
     AppComponent,
-    DataformComponent
+    DataformComponent,
+    Page2Component
   ],
   imports: [
     BrowserModule,
@@ -53,6 +62,10 @@ const AppCryptConfigProvider: CryptConfigProvider = {
     MatGridListModule,
     FlexLayoutModule,
     EncryptionServiceModule.forRoot(),
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: false } // <-- debugging purposes only
+    ),
     AngularFireModule.initializeApp(
        {
         apiKey: "AIzaSyBv3iWi5wB48xAuyjVATWK3fL02DyuTC4M",

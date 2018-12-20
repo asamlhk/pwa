@@ -1,4 +1,21 @@
 <body>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<app-dataform></app-dataform>
+
+    <head>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        
+        <script>
+            var DataLayer = {
+                
+            }
+        </script>
+        <script src="//assets.adobedtm.com/launch-EN7fbfc2414bf541ffa6fbc701eda2e878.min.js" async></script>
+    </head>
+
+    <h1>PoC</h1>
+    <nav >
+        <a routerLink="/dataform" routerLinkActive="active">Data Form</a> | 
+        <a routerLink="/page2" routerLinkActive="active">Page 2</a>
+    </nav>
+    <router-outlet></router-outlet>
+    <script type="text/javascript">_satellite.pageBottom();</script>
 </body>
